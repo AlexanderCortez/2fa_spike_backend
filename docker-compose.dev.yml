@@ -1,0 +1,36 @@
+version: "3"
+services: 
+  2fadevapp:
+    image: 2fadevapp
+    container_name: 2fadevapp
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    env_file: .env
+    command: npm run start:dev
+    volumes: 
+      - .:/opt/node_app/app:delegated
+    restart: always
+    networks:
+      - default
+    ports:
+      - 3000:3000
+    links:
+      - 2fadbdev
+    depends_on:
+      - 2fadbdev
+  2fadbdev:
+    image: postgres:12.2
+    container_name: 2fadbdev
+    ports:
+      - 5454:5432
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - 2fadbdev:/var/lib/postgresql/data
+    networks:
+      - default
+volumes:
+  2fadbdev:

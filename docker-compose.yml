@@ -1,0 +1,30 @@
+version: "3"
+services:
+  2faprodapp:
+    build: .
+    image: 2faprodapp
+    container_name: 2faprodapp
+    env_file: .env
+    command: npm run start:prod
+    restart: always
+    depends_on:
+      - 2fadbprod
+    ports:
+      - 3000:3000
+    links:
+      - 2fadbprod
+  2fadbprod:
+    image: postgres:12.2
+    container_name: 2fadbprod
+    ports:
+      - 5454:5432
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - 2fadbprod:/var/lib/postgresql/data
+    networks:
+      - default
+volumes:
+  2fadbprod:
