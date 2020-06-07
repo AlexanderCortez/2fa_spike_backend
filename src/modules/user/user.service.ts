@@ -13,6 +13,12 @@ export class UserService {
     private userRepository: Repository<User>
   ) { }
 
+  async setTwoAuthSecretKey(id: number, secret: string): Promise<User> {
+    const user = await this.findById(id);
+    user.twoAuthKey = secret;
+    return this.userRepository.save(user);
+  }
+
   async create(entry: AuthBodyDTO): Promise<UserDoc> {
     const user = new User(entry);
     const newUser = await this.userRepository.save(user);
@@ -33,5 +39,17 @@ export class UserService {
         id,
       }
     });
+  }
+
+  async findAll(): Promise<UserDoc[]> {
+    const users = await this.userRepository.find();
+    const payload = plainToClass(UserDoc, users, { excludeExtraneousValues: true });
+    return payload;
+  }
+
+  async enableOrDisableTwoFactor(id: number, enable: boolean): Promise<User> {
+    const user = await this.findById(id);
+    user.twoAuthEnabled = enable;
+    return this.userRepository.save(user);
   }
 }
