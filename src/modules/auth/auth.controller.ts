@@ -8,8 +8,6 @@ import { UserDTO } from '@user-module/dto/user.dto';
 import { LoginResponse } from '@utils/docs/login-response.doc';
 import { SignUpResponse } from '@utils/docs/signup-response.doc';
 import { User } from '@entities/user.entity';
-// import { User as User2 } from '@utils/docs/user.doc';
-// import { plainToClass } from 'class-transformer';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -29,7 +27,6 @@ export class AuthController {
   async signIn(
     @Request() req,
   ): Promise<LoginResponse> {
-    console.log('req.user ##', req.user)
     const { accessToken } = await this.authService.signIn(req.user);
     return {
       data: {
