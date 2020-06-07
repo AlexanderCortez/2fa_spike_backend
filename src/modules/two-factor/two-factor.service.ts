@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { authenticator, totp } from '@otplib/preset-default';
+import { authenticator } from '@otplib/preset-default';
 import * as qrcode from 'qrcode';
 import { User } from '@entities/user.entity';
 import { Generate2FADTO } from './dto/generate.dto';

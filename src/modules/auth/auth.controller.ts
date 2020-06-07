@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Request, Body, ConflictException, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, UseGuards, Post, Request, Body, ConflictException } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from '@auth-module/auth.service';
 import { AuthBodyDTO } from '@auth-module/dto/auth-body.dto';
