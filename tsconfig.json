@@ -9,7 +9,15 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@app-module/*": ["./src/modules/app/*"],
+      "@config/*": ["./src/config/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@auth-module/*": ["./src/modules/auth/*"],
+      "@user-module/*": ["./src/modules/user/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
