@@ -16,7 +16,8 @@
       "@entities/*": ["./src/entities/*"],
       "@auth-module/*": ["./src/modules/auth/*"],
       "@user-module/*": ["./src/modules/user/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@twofactor-module/*": ["./src/modules/two-factor/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
