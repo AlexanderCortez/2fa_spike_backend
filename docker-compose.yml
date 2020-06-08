@@ -15,11 +15,13 @@ services:
       - 3000:3000
     links:
       - 2fadbprod
+    volumes:
+      - ./webapp:/opt/webapp
   2fadbprod:
     image: postgres:12.2
     container_name: 2fadbprod
     ports:
-      - 5454:5432
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_USER: ${DATABASE_USERNAME}
