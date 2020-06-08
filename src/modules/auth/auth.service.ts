@@ -19,7 +19,7 @@ export class AuthService {
         return user;
       }
     }
-    return user;
+    return null;
   }
 
   async signIn(user: User) {

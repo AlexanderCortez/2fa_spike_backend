@@ -65,4 +65,22 @@ export class TwoFactorController {
     }
     await this.userService.enableOrDisableTwoFactor(user.id, false);
   }
+
+  @Post('validate')
+  @ApiBearerAuth()
+  @HttpCode(204)
+  @UseGuards(AuthGuard('jwt'))
+  async validate(
+    @Req() req,
+    @Body() body: TwoFactorActivateDTO,
+  ): Promise<void> {
+    const { user } = req;
+    if (!user.twoAuthEnabled) {
+      throw new UnprocessableEntityException('Two-factor is not enabled');
+    }
+    const isValid = this.twoFactorService.validate(body.token, user.twoAuthKey);
+    if (!isValid) {
+      throw new ForbiddenException('Token is invalid');
+    }
+  }
 }

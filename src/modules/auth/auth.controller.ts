@@ -1,5 +1,5 @@
-import { Controller, UseGuards, Post, Request, Body, ConflictException } from '@nestjs/common';
-import { ApiTags, ApiBody, ApiOperation } from '@nestjs/swagger';
+import { Controller, UseGuards, Post, Request, Body, ConflictException, HttpCode, Req } from '@nestjs/common';
+import { ApiTags, ApiBody, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from '@auth-module/auth.service';
 import { AuthBodyDTO } from '@auth-module/dto/auth-body.dto';
 import { UserService } from '@user-module/user.service';
@@ -8,6 +8,9 @@ import { UserDTO } from '@user-module/dto/user.dto';
 import { LoginResponse } from '@utils/docs/login-response.doc';
 import { SignUpResponse } from '@utils/docs/signup-response.doc';
 import { User } from '@entities/user.entity';
+import { CheckSessionResponse } from '@utils/docs/check-session.response.doc';
+import { plainToClass } from 'class-transformer';
+import { UserDoc } from '@utils/docs/user.doc';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -51,6 +54,21 @@ export class AuthController {
     const newUser = await this.userService.create(user);
     return {
       data: newUser,
+    };
+  }
+
+  @ApiOperation({
+    description: 'Use this endpoint to chech the session',
+    summary: 'Check Token',
+  })
+  @ApiBearerAuth()
+  @Post('/check-session-token')
+  @UseGuards(AuthGuard('jwt'))
+  async checkSessionToken(
+    @Req() req,
+  ): Promise<CheckSessionResponse> {
+    return {
+      data: plainToClass(UserDoc, req.user, { excludeExtraneousValues: true }),
     };
   }
 }
