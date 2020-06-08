@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npm run migration:run && node dist/src/main",
+    "start": "node dist/src/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
@@ -26,7 +26,11 @@
     "migration:generate": "npm run build && npm run typeorm -- migration:generate -n",
     "migration:run": "npm run typeorm migration:run",
     "migration:revert": "npm run typeorm migration:revert",
-    "postinstall": "npm run migration:run"
+    "postinstall": "npm run build && npm run migration:run"
+  },
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.14.4"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
