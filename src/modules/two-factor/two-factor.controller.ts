@@ -29,6 +29,7 @@ export class TwoFactorController {
     return {
       data: {
         qrImage: twoFactorGenerate.qrImage,
+        secret: twoFactorGenerate.secret,
       },
     };
   }
