@@ -5,7 +5,9 @@ services:
     image: 2faprodapp
     container_name: 2faprodapp
     env_file: .env
-    command: npm run start:prod
+    command: >
+      sh -c "npm run migration:run &&
+             npm run start:prod"
     restart: always
     depends_on:
       - 2fadbprod
